@@ -11,8 +11,8 @@ contract SoulboundToken is SBT_ERC721, Ownable {
   using Counters for Counters.Counter;
 
   Counters.Counter private _tokenIdCounter;
-
-  constructor() SBT_ERC721("SoulboundToken", "SBT") {
+  
+  constructor(bool default_minting_locking_status) SBT_ERC721(default_minting_locking_status, "SoulboundToken", "SBT") {
     safeMint(msg.sender);
   }
 

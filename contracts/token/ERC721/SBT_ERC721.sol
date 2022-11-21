@@ -28,6 +28,9 @@ contract SBT_ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC5192  {
     // Token symbol
     string private _symbol;
 
+    // SBT default minting status
+    bool immutable _DEFAULT_MINTING_LOCKING_STATUS;
+
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
 
@@ -47,9 +50,10 @@ contract SBT_ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC5192  {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor(string memory name_, string memory symbol_) {
+    constructor(bool minting_locking_status, string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
+        _DEFAULT_MINTING_LOCKING_STATUS = minting_locking_status;
     }
 
     /**
@@ -308,8 +312,10 @@ contract SBT_ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC5192  {
         }
 
         _owners[tokenId] = to;
+        
 
         //SBT
+        _lockingStatus[tokenId] = _DEFAULT_MINTING_LOCKING_STATUS;
         if (_lockingStatus[tokenId]) {
           emit Locked(tokenId);
         }
@@ -538,6 +544,7 @@ contract SBT_ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC5192  {
    */
   function _lockToken(uint256 tokenId) internal {
     require(_lockingStatus[tokenId] == false, "SBT: token is already locked");
+    require(_exists(tokenId), "SBT: invalid token ID");
     _lockingStatus[tokenId] = true;
     emit Locked(tokenId);
   }
@@ -547,6 +554,7 @@ contract SBT_ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC5192  {
    */
   function _unlockToken(uint256 tokenId) internal {
     require(_lockingStatus[tokenId] == true, "SBT: token is already unlocked");
+    require(_exists(tokenId), "SBT: invalid token ID");
     _lockingStatus[tokenId] = false;
     emit Unlocked(tokenId);
   }

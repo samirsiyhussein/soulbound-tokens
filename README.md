@@ -22,3 +22,9 @@ Testing the various Soulbound tokens interfaces as proposed in [Decentralized So
 1. Implement the minimal for token to be a SBT (EIP-5192 -> Final)
 2. Implement burning mechanism (EIP-5484 -> Final)
 
+## Development SBT_ERC721
+- Implement lockToken & unlockToken functions to change locking status (by contract owner)
+- Implement locked function 
+- Add immutable variable for default locking status on minting (otherwise by default will always be unlocked)
+- Update ERC-721 constructor to initiliaze default locking status variable
+
