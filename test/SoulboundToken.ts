@@ -31,8 +31,17 @@ describe("SoulboundToken contract", function () {
       .to.emit(soulboundToken, "Unlocked");
   })
 
-  // Verify that 
-  it("Should revert with string message if status is already unlocked", async function () {
+  // Lock token
+  // Unlock token
+  it("Should emit Unlocked event when locking status is changed to unlocked", async function () {
+    const { soulboundToken, owner } = await loadFixture(deploySBTFixture);
+
+    await soulboundToken.lockToken(0);
+    await expect(soulboundToken.unlockToken(0))
+      .to.emit(soulboundToken, "Unlocked");
+  })
+
+  it("Should revert with string message if locking status is already unlocked", async function () {
     const { soulboundToken, owner } = await loadFixture(deploySBTFixture);
 
     await expect(soulboundToken.unlockToken(0)).to.be.reverted;
