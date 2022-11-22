@@ -27,4 +27,5 @@ Testing the various Soulbound tokens interfaces as proposed in [Decentralized So
 - Implement locked function 
 - Add immutable variable for default locking status on minting (otherwise by default will always be unlocked)
 - Update ERC-721 constructor to initiliaze default locking status variable
+- Update _mint function
 

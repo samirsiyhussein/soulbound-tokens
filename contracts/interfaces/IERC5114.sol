@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: CC0-1.0
+// Draft
 interface IERC5114 {
 	// fired anytime a new instance of this token is minted
 	// this event **MUST NOT** be fired twice for the same `tokenId`
